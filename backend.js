@@ -71,10 +71,7 @@ function cargarProveedores() {
 // =====================================================
 function guardarProveedor() {
     
-    // Validar antes de guardar
-    if (!validarFormularioProveedor()) {
-        return;
-    }
+    
 
     let datos = {
         accion: "crear",
@@ -191,7 +188,7 @@ function eliminarProveedor(id) {
 
 
 // =====================================================
-// LIMPIAR FORMULARIO
+// LIMPIAR FORMULARIO(PROVEEDOR)
 // =====================================================
 function limpiarFormularioProveedor() {
 
@@ -215,22 +212,42 @@ function limpiarFormularioProveedor() {
 // ===============   CATEGORÍAS   ======================
 // =====================================================
 
-// Cargar al abrir la página
-document.addEventListener("DOMContentLoaded", () => {
-    cargarCategorias();
+// Esperar a que el DOM esté completamente cargado
+window.addEventListener("load", function() {
+    
+    // Esperar un poco más para asegurar que todo esté listo
+    setTimeout(function() {
+        cargarCategorias();
+        inicializarBotonesCategorias();
+    }, 500);
+});
 
-    // Botones dentro del módulo categorías
+function inicializarBotonesCategorias() {
     const modulo = document.querySelector("#categorias");
+    
+    if (!modulo) {
+        console.error("No se encontró el módulo de categorías");
+        return;
+    }
 
     // Botón Crear (boton-exito)
-    modulo.querySelector(".boton-exito").addEventListener("click", guardarCategoria);
+    const btnCrear = modulo.querySelector(".boton-exito");
+    if (btnCrear) {
+        btnCrear.addEventListener("click", guardarCategoria);
+    }
 
     // Botón Modificar (boton-advertencia)
-    modulo.querySelector(".boton-advertencia").addEventListener("click", modificarCategoria);
+    const btnModificar = modulo.querySelector(".boton-advertencia");
+    if (btnModificar) {
+        btnModificar.addEventListener("click", modificarCategoria);
+    }
 
     // Botón Limpiar (boton-secundario)
-    modulo.querySelector(".boton-secundario").addEventListener("click", limpiarFormularioCategoria);
-});
+    const btnLimpiar = modulo.querySelector(".boton-secundario");
+    if (btnLimpiar) {
+        btnLimpiar.addEventListener("click", limpiarFormularioCategoria);
+    }
+}
 
 
 // =====================================================
