@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Servicios Integrales S.A.</title>
+
+    <!--PRUEBA-->
+    <link rel="icon" type="image/png" href="img/LOGO.png" />
+    <link rel="apple-touch-icon" href="img/LOGO.png" />
+
+    <link rel="stylesheet" href="Lupin.css" />
+</head>
+
+<body>
+    <!--NO TOCAR ES PARA DECORACION-->
+    <div id="pantalla-carga">
+        <h1>Servicios Integrales S.A.</h1>
+        <section class="lupin-cargador">
+            <div class="lupin-deslizador" style="--i: 0"></div>
+            <div class="lupin-deslizador" style="--i: 1"></div>
+            <div class="lupin-deslizador" style="--i: 2"></div>
+            <div class="lupin-deslizador" style="--i: 3"></div>
+            <div class="lupin-deslizador" style="--i: 4"></div>
+        </section>
+    </div>
+
+    <!--CONTENEDOR DE LA ZONA INICIAL-->
+    <div id="Cprincipal">
+        <nav class="navbar">
+            <div class="navbar-contenedor">
+                <div class="lupin-logo">
+                    <div class="logo-circulo">
+                        <img src="img/LOGO.png" alt="LOGO" />
+                    </div>
+                    <div class="logo-texto">
+                        <h2>Servicios Integrales S.A.</h2>
+                        <p>Sistema de Control de Facturas</p>
+                    </div>
+                </div>
+
+                <div class="interruptor-tema-contenedor">
+                    <label class="interruptor-tema">
+              <input
+                type="checkbox"
+                class="interruptor-tema-checkbox"
+                id="cambio-tema"
+              />
+              <div class="interruptor-tema-fondo">
+                <div class="interruptor-nubes"></div>
+                <div class="interruptor-estrellas">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 144 55"
+                    fill="none"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M135.831 3.00688C135.055 3.85027 134.111 4.29946 133 4.35447C134.111 4.40947 135.055 4.85867 135.831 5.71123C136.607 6.55462 136.996 7.56303 136.996 8.72727C136.996 7.95722 137.172 7.25134 137.525 6.59129C137.886 5.93124 138.372 5.39954 138.98 5.00535C139.598 4.60199 140.268 4.39114 141 4.35447C139.88 4.2903 138.936 3.85027 138.16 3.00688C137.384 2.16348 136.996 1.16425 136.996 0C136.996 1.16425 136.607 2.16348 135.831 3.00688ZM31 23.3545C32.1114 23.2995 33.0551 22.8503 33.8313 22.0069C34.6075 21.1635 34.9956 20.1642 34.9956 19C34.9956 20.1642 35.3837 21.1635 36.1599 22.0069C36.9361 22.8503 37.8798 23.2903 39 23.3545C38.2679 23.3911 37.5976 23.602 36.9802 24.0053C36.3716 24.3995 35.8864 24.9312 35.5248 25.5913C35.172 26.2513 34.9956 26.9572 34.9956 27.7273C34.9956 26.563 34.6075 25.5546 33.8313 24.7112C33.0551 23.8587 32.1114 23.4095 31 23.3545ZM0 36.3545C1.11136 36.2995 2.05513 35.8503 2.83131 35.0069C3.6075 34.1635 3.99559 33.1642 3.99559 32C3.99559 33.1642 4.38368 34.1635 5.15987 35.0069C5.93605 35.8503 6.87982 36.2903 8 36.3545C7.26792 36.3911 6.59757 36.602 5.98015 37.0053C5.37155 37.3995 4.88644 37.9312 4.52481 38.5913C4.172 39.2513 3.99559 39.9572 3.99559 40.7273C3.99559 39.563 3.6075 38.5546 2.83131 37.7112C2.05513 36.8587 1.11136 36.4095 0 36.3545ZM56.8313 24.0069C56.0551 24.8503 55.1114 25.2995 54 25.3545C55.1114 25.4095 56.0551 25.8587 56.8313 26.7112C57.6075 27.5546 57.9956 28.563 57.9956 29.7273C57.9956 28.9572 58.172 28.2513 58.5248 27.5913C58.8864 26.9312 59.3716 26.3995 59.9802 26.0053C60.5976 25.602 61.2679 25.3911 62 25.3545C60.8798 25.2903 59.9361 24.8503 59.1599 24.0069C58.3837 23.1635 57.9956 22.1642 57.9956 21C57.9956 22.1642 57.6075 23.1635 56.8313 24.0069ZM81 25.3545C82.1114 25.2995 83.0551 24.8503 83.8313 24.0069C84.6075 23.1635 84.9956 22.1642 84.9956 21C84.9956 22.1642 85.3837 21.1635 86.1599 24.0069C86.9361 24.8503 87.8798 25.2903 89 25.3545C88.2679 25.3911 87.5976 25.602 86.9802 26.0053C86.3716 26.3995 85.8864 26.9312 85.5248 27.5913C85.172 28.2513 84.9956 28.9572 84.9956 29.7273C84.9956 28.563 84.6075 27.5546 83.8313 26.7112C83.0551 25.8587 82.1114 25.4095 81 25.3545ZM136 36.3545C137.111 36.2995 138.055 35.8503 138.831 35.0069C139.607 34.1635 139.996 33.1642 139.996 32C139.996 33.1642 140.384 34.1635 141.16 35.0069C141.936 35.8503 142.88 36.2903 144 36.3545C143.268 36.3911 142.598 36.602 141.98 37.0053C141.372 37.3995 140.886 37.9312 140.525 38.5913C140.172 39.2513 139.996 39.9572 139.996 40.7273C139.996 39.563 139.607 38.5546 138.831 37.7112C138.055 36.8587 137.111 36.4095 136 36.3545ZM101.831 49.0069C101.055 49.8503 100.111 50.2995 99 50.3545C100.111 50.4095 101.055 50.8587 101.831 51.7112C102.607 52.5546 102.996 53.563 102.996 54.7273C102.996 53.9572 103.172 53.2513 103.525 52.5913C103.886 51.9312 104.372 51.3995 104.98 51.0053C105.598 50.602 106.268 50.3911 107 50.3545C105.88 50.2903 104.936 49.8503 104.16 49.0069C103.384 48.1635 102.996 47.1642 102.996 46C102.996 47.1642 102.607 48.1635 101.831 49.0069Z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                </div>
+                <div class="interruptor-circulo-contenedor">
+                  <div class="interruptor-sol-luna-contenedor">
+                    <div class="interruptor-luna">
+                      <div class="interruptor-mancha"></div>
+                      <div class="interruptor-mancha"></div>
+                      <div class="interruptor-mancha"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </label>
+                </div>
+
+                <div class="menu-navegacion">
+                    <button class="boton-nav activo" onclick="mostrarSeccion('bienvenida')">
+              Inicio
+            </button>
+                    <button class="boton-nav" onclick="mostrarSeccion('facturas')">
+              Registro de Facturas
+            </button>
+                    <button class="boton-nav" onclick="mostrarSeccion('proveedores')">
+              Proveedores
+            </button>
+                    <button class="boton-nav" onclick="mostrarSeccion('categorias')">
+              Categorías
+            </button>
+                    <button class="boton-nav" onclick="mostrarSeccion('reportes')">
+              Reportes
+            </button>
+                </div>
+            </div>
+        </nav>
+
+        <!--HOME-->
+        <div class="contenedor-general">
+            <div id="bienvenida" class="seccion-contenido activo">
+                <div class="seccion-bienvenida">
+                    <h1>Bienvenido al Sistema de Control de Facturas</h1>
+                    <p>
+                        Sistema integral para la gestión y seguimiento de facturas de compras. Registre, consulte y genere reportes de manera eficiente.
+                    </p>
+                </div>
+
+                <!-- Imagen decorativa debajo del recuadro de bienvenida -->
+                <div class="imagen-decorativa">
+                    <img src="img/deco.jpg" alt="Decoración" />
+                </div>
+
+                <div class="grilla-caracteristicas">
+                    <div class="tarjeta-caracteristica">
+                        <h2>Gestión de Documentos</h2>
+                        <p>Registre y administre todas sus facturas de compra</p>
+                    </div>
+                    <div class="tarjeta-caracteristica">
+                        <h2>Control de Proveedores</h2>
+                        <p>Mantenga actualizada su base de proveedores</p>
+                    </div>
+                    <div class="tarjeta-caracteristica">
+                        <h2>Reportes Detallados</h2>
+                        <p>Genere análisis y exportaciones en formato CSV</p>
+                    </div>
+                </div>
+            </div>
+
+            <!--FACTURAS-->
+            <div id="facturas" class="seccion-contenido">
+                <div class="tarjeta-formulario">
+                    <h2>Registro de Facturas</h2>
+                    <div class="grilla-formulario">
+                        <div class="grupo-campo">
+                            <label>Fecha de Factura</label>
+                            <input type="date" id="fecha-factura" />
+                        </div>
+                        <div class="grupo-campo">
+                            <label>Número de Factura</label>
+                            <input type="text" id="numero-factura" />
+                        </div>
+                        <div class="grupo-campo">
+                            <label>Proveedor</label>
+                            <select id="proveedor-factura">
+                  <option value="">Seleccione un proveedor</option>
+                </select>
+                        </div>
+                        <div class="grupo-campo">
+                            <label>Tipo de Factura</label>
+                            <select id="categoria-factura">
+                  <option value="">Seleccione una categoría</option>
+                </select>
+                        </div>
+                        <div class="grupo-campo">
+                            <label>Subtotal</label>
+                            <input type="number" id="subtotal-factura" step="0.01" />
+                        </div>
+                        <div class="grupo-campo">
+                            <label>ITBMS</label>
+                            <input type="number" id="itbms-factura" step="0.01" />
+                        </div>
+                        <div class="grupo-campo">
+                            <label>Total de Factura (Calculado)</label>
+                            <input type="number" id="total-factura" step="0.01" disabled />
+                        </div>
+                    </div>
+                    <div class="botones-accion">
+                        <button class="boton boton-exito">Crear</button>
+                        <button class="boton boton-advertencia">Modificar</button>
+                        <button class="boton boton-peligro">Eliminar</button>
+                        <button class="boton boton-secundario">Limpiar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--PROVEEDORES-->
+            <div id="proveedores" class="seccion-contenido">
+                <div class="tarjeta-formulario">
+                    <h2>Registro de Proveedores</h2>
+                    <div class="grilla-formulario">
+                        <div class="grupo-campo">
+                            <label>Código del Proveedor</label>
+                            <input type="text" id="codigo-proveedor" />
+                        </div>
+                        <div class="grupo-campo">
+                            <label>Nombre del Proveedor</label>
+                            <input type="text" id="nombre-proveedor" />
+                        </div>
+                        <div class="grupo-campo">
+                            <label>RUC</label>
+                            <input type="text" id="ruc-proveedor" />
+                        </div>
+                        <div class="grupo-campo">
+                            <label>Dígito Verificador</label>
+                            <input type="text" id="dv-proveedor" />
+                        </div>
+                        <div class="grupo-campo ancho-completo">
+                            <label>Dirección</label>
+                            <textarea id="direccion-proveedor" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="botones-accion">
+                        <button class="boton boton-exito">Crear</button>
+                        <button class="boton boton-advertencia">Modificar</button>
+                        <button class="boton boton-peligro">Eliminar</button>
+                        <button class="boton boton-secundario">Limpiar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--CATEGORIAS-->
+            <div id="categorias" class="seccion-contenido">
+                <div class="tarjeta-formulario">
+                    <h2>Registro de Categorías</h2>
+                    <div class="grilla-formulario">
+                        <div class="grupo-campo">
+                            <label>Categoría</label>
+                            <input type="text" id="nombre-categoria" />
+                        </div>
+                        <div class="grupo-campo ancho-completo">
+                            <label>Descripción</label>
+                            <textarea id="descripcion-categoria" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="botones-accion">
+                        <button class="boton boton-exito">Crear</button>
+                        <button class="boton boton-advertencia">Modificar</button>
+                        <button class="boton boton-peligro">Eliminar</button>
+                        <button class="boton boton-secundario">Limpiar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--REPORTES-->
+            <div id="reportes" class="seccion-contenido">
+                <div class="seccion-filtros">
+                    <h2>Filtros de Búsqueda</h2>
+                    <div class="grilla-filtros">
+                        <div class="grupo-campo">
+                            <label>Fecha Inicio</label>
+                            <input type="date" id="fecha-inicio-filtro" />
+                        </div>
+                        <div class="grupo-campo">
+                            <label>Fecha Fin</label>
+                            <input type="date" id="fecha-fin-filtro" />
+                        </div>
+                        <div class="grupo-campo">
+                            <label>Proveedor</label>
+                            <select id="proveedor-filtro">
+                  <option value="">Todos</option>
+                </select>
+                        </div>
+                        <div class="grupo-campo">
+                            <label>Categoría</label>
+                            <select id="categoria-filtro">
+                  <option value="">Todas</option>
+                </select>
+                        </div>
+                    </div>
+                    <div class="botones-accion botones-izquierda">
+                        <button class="boton boton-primario">Buscar</button>
+                        <button class="boton boton-exito">Exportar CSV</button>
+                        <button class="boton boton-secundario">Limpiar Filtros</button>
+                    </div>
+                </div>
+
+                <!--TOTAL DEL UNIVERSO-->
+                <div class="tarjeta-totales">
+                    <h3>Total de Facturas Filtradas</h3>
+                    <div class="monto-total">$0.00</div>
+                    <p>Basado en 0 facturas encontradas</p>
+                </div>
+
+                <div class="contenedor-tabla">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>No. Factura</th>
+                                <th>Proveedor</th>
+                                <th>Categoría</th>
+                                <th>Subtotal</th>
+                                <th>ITBMS</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-reportes">
+                            <tr>
+                                <td colspan="7" style="text-align: center; padding: 2rem">
+                                    No hay facturas registradas
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón de WhatsApp flotante -->
+        <div class="whatsapp-flotante">
+            <div class="whatsapp-burbuja">Atención al cliente</div>
+            <a href="https://wa.me/50765666866?text=Buenas%20tardes%2C%20disculpe%20quisiera%20informaci%C3%B3n%20sobre%20un%20problema%20que%20tuve%20con%20el%20sistema" target="_blank" class="whatsapp-boton">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor">
+            <path
+              d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"
+            />
+          </svg>
+            </a>
+        </div>
+    </div>
+
+    <script src="Arsene.js"></script>
+    <!-- backend -->
+     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+     <script src="backend.js"></script>
+</body>
+
+</html>
