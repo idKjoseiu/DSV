@@ -833,3 +833,74 @@ td {
 
 
 }
+/* =====================================================
+   ESTILOS PARA VALIDACIONES - Agregar a Lupin.css
+   ===================================================== */
+
+/* Texto pequeño de ayuda debajo de inputs */
+.grupo-campo small {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: 0.85em;
+    color: #718096;
+}
+
+body.modo-oscuro .grupo-campo small {
+    color: #a0aec0;
+}
+
+/* Campo requerido (asterisco rojo) */
+.grupo-campo label span {
+    color: #f56565;
+    font-weight: bold;
+}
+
+/* Efecto visual cuando el input está enfocado */
+.grupo-campo input:focus,
+.grupo-campo select:focus,
+.grupo-campo textarea:focus {
+    outline: none;
+    border-color: #9333ea;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.1);
+}
+
+body.modo-oscuro .grupo-campo input:focus,
+body.modo-oscuro .grupo-campo select:focus,
+body.modo-oscuro .grupo-campo textarea:focus {
+    background: #0a0a0a;
+    border-color: #9333ea;
+    box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.2);
+}
+
+/* Estado de error (opcional - para uso futuro) */
+.grupo-campo input.error,
+.grupo-campo select.error,
+.grupo-campo textarea.error {
+    border-color: #f56565;
+}
+
+.grupo-campo input.error:focus,
+.grupo-campo select.error:focus,
+.grupo-campo textarea.error:focus {
+    box-shadow: 0 0 0 3px rgba(245, 101, 101, 0.1);
+}
+
+/* Estado de éxito (opcional - para uso futuro) */
+.grupo-campo input.success,
+.grupo-campo select.success,
+.grupo-campo textarea.success {
+    border-color: #48bb78;
+}
+
+/* Placeholder mejorado */
+.grupo-campo input::placeholder,
+.grupo-campo textarea::placeholder {
+    color: #a0aec0;
+    font-style: italic;
+}
+
+body.modo-oscuro .grupo-campo input::placeholder,
+body.modo-oscuro .grupo-campo textarea::placeholder {
+    color: #4a5568;
+}

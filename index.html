@@ -168,8 +168,8 @@
                     </div>
                     <div class="botones-accion">
                         <button class="boton boton-exito">Crear</button>
-                        <button class="boton boton-advertencia">Modificar</button>
-                        <button class="boton boton-peligro">Eliminar</button>
+                        <button class="boton boton-advertencia" style="display: none;">Modificar</button>
+                        <button class="boton boton-peligro" style="display: none;">Eliminar</button>
                         <button class="boton boton-secundario">Limpiar</button>
                     </div>
                 </div>
@@ -203,10 +203,31 @@
                     </div>
                     <div class="botones-accion">
                         <button class="boton boton-exito">Crear</button>
-                        <button class="boton boton-advertencia">Modificar</button>
-                        <button class="boton boton-peligro">Eliminar</button>
+                        <button class="boton boton-advertencia" style="display: none;">Modificar</button>
                         <button class="boton boton-secundario">Limpiar</button>
                     </div>
+                </div>
+                    
+                <!-- enlistar los proveedores -->
+                <div class="contenedor-tabla" style="margin-top: 2rem;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Nombre</th>
+                                <th>RUC-DV</th>
+                                <th>Dirección</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-proveedores">
+                            <tr>
+                                <td colspan="5" style="text-align: center; padding: 2rem">
+                                    No hay proveedores registrados
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
@@ -217,19 +238,38 @@
                     <div class="grilla-formulario">
                         <div class="grupo-campo">
                             <label>Categoría</label>
-                            <input type="text" id="nombre-categoria" />
+                            <input type="text" id="nombre-categoria" placeholder="Ej: Medicamento" />
                         </div>
                         <div class="grupo-campo ancho-completo">
                             <label>Descripción</label>
-                            <textarea id="descripcion-categoria" rows="3"></textarea>
+                            <textarea id="descripcion-categoria" rows="3" placeholder="Descripción de la categoría"></textarea>
                         </div>
                     </div>
                     <div class="botones-accion">
                         <button class="boton boton-exito">Crear</button>
-                        <button class="boton boton-advertencia">Modificar</button>
-                        <button class="boton boton-peligro">Eliminar</button>
+                        <button class="boton boton-advertencia" style="display: none;">Modificar</button>
                         <button class="boton boton-secundario">Limpiar</button>
                     </div>
+                </div>
+
+                <!-- Tabla de categorías registradas -->
+                <div class="contenedor-tabla" style="margin-top: 2rem;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Categoría</th>
+                                <th>Descripción</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-categorias">
+                            <tr>
+                                <td colspan="3" style="text-align: center; padding: 2rem">
+                                    No hay categorías registradas
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
