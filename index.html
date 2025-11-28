@@ -173,6 +173,31 @@
                         <button class="boton boton-secundario">Limpiar</button>
                     </div>
                 </div>
+
+                <!-- Tabla de facturas registradas -->
+                <div class="contenedor-tabla" style="margin-top: 2rem;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>No. Factura</th>
+                                <th>Proveedor</th>
+                                <th>Categoría</th>
+                                <th>Subtotal</th>
+                                <th>ITBMS</th>
+                                <th>Total</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-facturas">
+                            <tr>
+                                <td colspan="8" style="text-align: center; padding: 2rem">
+                                    No hay facturas registradas
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <!--PROVEEDORES-->
@@ -215,7 +240,7 @@
                             <tr>
                                 <th>Código</th>
                                 <th>Nombre</th>
-                                <th>RUC-DV</th>
+                                <th>RUC</th>
                                 <th>Dirección</th>
                                 <th>Acciones</th>
                             </tr>

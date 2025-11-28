@@ -67,6 +67,37 @@ function cargarProveedores() {
 
 
 // =====================================================
+// EDITAR (CARGAR DATOS AL FORMULARIO)
+// =====================================================
+function editarProveedor(id) {
+    $.post("php/proveedores.php", { accion: "listar" }, function (respuesta) {
+        let datos = JSON.parse(respuesta);
+        let p = datos.find(item => item.id_proveedor == id);
+
+        if (!p) return;
+
+        // Rellenar inputs
+        document.getElementById("codigo-proveedor").value = p.codigo;
+        document.getElementById("nombre-proveedor").value = p.nombre;
+        document.getElementById("ruc-proveedor").value = p.ruc;
+        document.getElementById("dv-proveedor").value = p.dv;
+        document.getElementById("direccion-proveedor").value = p.direccion;
+
+        // Guardamos el ID en un atributo oculto
+        document.getElementById("proveedores").setAttribute("data-id", id);
+
+        // Alternar botones
+        const modulo = document.querySelector("#proveedores");
+        modulo.querySelector(".boton-exito").style.display = "none"; // ocultar crear
+        modulo.querySelector(".boton-advertencia").style.display = "inline-block"; // mostrar modificar
+        
+        // Scroll al formulario
+        modulo.scrollIntoView({ behavior: 'smooth' });
+    });
+}
+
+
+// =====================================================
 // CREAR PROVEEDOR
 // =====================================================
 function guardarProveedor() {
@@ -105,11 +136,8 @@ function modificarProveedor() {
     const modulo = document.querySelector("#proveedores");
     const id = modulo.getAttribute("data-id");
     
-    // Validar antes de modificar
-    if (!validarFormularioProveedor()) {
-        return;
-    }
-
+    
+    
     let datos = {
         accion: "modificar",
         id: id,
@@ -439,4 +467,310 @@ function limpiarFormularioCategoria() {
     // Alternar botones
     modulo.querySelector(".boton-exito").style.display = "inline-block";  // mostrar Crear
     modulo.querySelector(".boton-advertencia").style.display = "none";     // ocultar Modificar
+}
+
+// ===============================================================================================================================================================
+// ===============   FACTURAS   =====================
+// ===============================================================================================================================================================
+
+// Cargar lista y llenar selects al abrir la página
+document.addEventListener("DOMContentLoaded", () => {
+    cargarFacturas();
+    cargarProveedoresSelect();
+    cargarCategoriasSelect();
+
+    // Botones dentro del módulo
+    const modulo = document.querySelector("#facturas");
+
+    // Botón Crear (boton-exito)
+    modulo.querySelector(".boton-exito").addEventListener("click", guardarFactura);
+
+    // Botón Modificar (boton-advertencia)
+    modulo.querySelector(".boton-advertencia").addEventListener("click", modificarFactura);
+
+    // Botón Eliminar (boton-peligro)
+    modulo.querySelector(".boton-peligro").addEventListener("click", eliminarFacturaActual);
+
+    // Botón Limpiar (boton-secundario)
+    modulo.querySelector(".boton-secundario").addEventListener("click", limpiarFormularioFactura);
+
+    // Calcular total automáticamente
+    document.getElementById("subtotal-factura").addEventListener("change", calcularTotal);
+    document.getElementById("itbms-factura").addEventListener("change", calcularTotal);
+});
+
+
+// =====================================================
+// CARGAR PROVEEDORES EN SELECT
+// =====================================================
+function cargarProveedoresSelect() {
+    $.post("php/proveedores.php", { accion: "listar" }, function (respuesta) {
+        let datos = JSON.parse(respuesta);
+        let select = document.getElementById("proveedor-factura");
+        
+        select.innerHTML = '<option value="">Seleccione un proveedor</option>';
+        
+        datos.forEach(p => {
+            select.innerHTML += `<option value="${p.id_proveedor}">${p.nombre}</option>`;
+        });
+    });
+}
+
+
+// =====================================================
+// CARGAR CATEGORÍAS EN SELECT
+// =====================================================
+function cargarCategoriasSelect() {
+    $.post("php/categorias.php", { accion: "listar" }, function (respuesta) {
+        let datos = JSON.parse(respuesta);
+        let select = document.getElementById("categoria-factura");
+        
+        select.innerHTML = '<option value="">Seleccione una categoría</option>';
+        
+        datos.forEach(c => {
+            select.innerHTML += `<option value="${c.id_categoria}">${c.nombre}</option>`;
+        });
+    });
+}
+
+
+// =====================================================
+// CALCULAR TOTAL (SUBTOTAL + ITBMS)
+// =====================================================
+function calcularTotal() {
+    const subtotal = parseFloat(document.getElementById("subtotal-factura").value) || 0;
+    const itbms = subtotal * 0.07; // Calcular ITBMS como 7% del subtotal
+    const total = subtotal + itbms;
+    
+    document.getElementById("itbms-factura").value = itbms.toFixed(2);
+    document.getElementById("total-factura").value = total.toFixed(2);
+}
+
+
+// =====================================================
+// LISTAR FACTURAS
+// =====================================================
+function cargarFacturas() {
+    $.post("php/facturas.php", { accion: "listar" }, function (respuesta) {
+        let datos = [];
+        try {
+            datos = JSON.parse(respuesta);
+        } catch (e) {
+            console.error("JSON inválido:", respuesta);
+            return;
+        }
+
+        let tabla = "";
+
+        if (datos.length === 0) {
+            tabla = `
+                <tr>
+                    <td colspan="8" style="text-align:center; padding:2rem;">
+                        No hay facturas registradas
+                    </td>
+                </tr>
+            `;
+        } else {
+            datos.forEach(f => {
+                tabla += `
+                    <tr>
+                        <td>${f.fecha}</td>
+                        <td>${f.numero}</td>
+                        <td>${f.nombre_proveedor}</td>
+                        <td>${f.nombre_categoria}</td>
+                        <td>$${parseFloat(f.subtotal).toFixed(2)}</td>
+                        <td>$${parseFloat(f.itbms).toFixed(2)}</td>
+                        <td>$${parseFloat(f.total).toFixed(2)}</td>
+                        <td>
+                            <button class="boton-advertencia boton-pequeno" onclick="editarFactura(${f.id_factura})">Editar</button>
+                            <button class="boton-peligro boton-pequeno" onclick="eliminarFactura(${f.id_factura})">Eliminar</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        document.getElementById("tabla-facturas").innerHTML = tabla;
+    });
+}
+
+
+// =====================================================
+// CREAR FACTURA
+// =====================================================
+function guardarFactura() {
+    const fecha = document.getElementById("fecha-factura").value.trim();
+    const numero = document.getElementById("numero-factura").value.trim();
+    const id_proveedor = document.getElementById("proveedor-factura").value;
+    const id_categoria = document.getElementById("categoria-factura").value;
+    const subtotal = document.getElementById("subtotal-factura").value;
+    const itbms = document.getElementById("itbms-factura").value;
+    const total = document.getElementById("total-factura").value;
+
+    if (!fecha || !numero || !id_proveedor || !id_categoria || !subtotal || !itbms) {
+        alert("Por favor complete todos los campos");
+        return;
+    }
+
+    let datos = {
+        accion: "crear",
+        fecha: fecha,
+        numero: numero,
+        id_proveedor: id_proveedor,
+        id_categoria: id_categoria,
+        subtotal: subtotal,
+        itbms: itbms,
+        total: total
+    };
+
+    $.post("php/facturas.php", datos, function (res) {
+        if (res.trim() === "ok") {
+            alert("Factura registrada correctamente");
+            cargarFacturas();
+            limpiarFormularioFactura();
+        } else {
+            alert("Error al registrar factura");
+        }
+    });
+}
+
+
+// =====================================================
+// EDITAR (CARGAR DATOS AL FORMULARIO)
+// =====================================================
+function editarFactura(id) {
+    $.post("php/facturas.php", { accion: "listar" }, function (respuesta) {
+        let datos = JSON.parse(respuesta);
+        let f = datos.find(item => item.id_factura == id);
+
+        if (!f) return;
+
+        // Rellenar inputs
+        document.getElementById("fecha-factura").value = f.fecha;
+        document.getElementById("numero-factura").value = f.numero;
+        document.getElementById("proveedor-factura").value = f.id_proveedor;
+        document.getElementById("categoria-factura").value = f.id_categoria;
+        document.getElementById("subtotal-factura").value = f.subtotal;
+        document.getElementById("itbms-factura").value = f.itbms;
+        document.getElementById("total-factura").value = f.total;
+
+        // Guardamos el ID en un atributo oculto
+        document.getElementById("facturas").setAttribute("data-id", id);
+
+        // Alternar botones
+        const modulo = document.querySelector("#facturas");
+        modulo.querySelector(".boton-exito").style.display = "none"; // ocultar crear
+        modulo.querySelector(".boton-advertencia").style.display = "inline-block"; // mostrar modificar
+        // NO mostrar botón eliminar (ya existe en la tabla)
+        
+        // Scroll al formulario
+        modulo.scrollIntoView({ behavior: 'smooth' });
+    });
+}
+
+
+// =====================================================
+// GUARDAR MODIFICACIÓN
+// =====================================================
+function modificarFactura() {
+    const modulo = document.querySelector("#facturas");
+    const id = modulo.getAttribute("data-id");
+
+    if (!id) {
+        alert("Primero debe seleccionar una factura para modificar");
+        return;
+    }
+
+    const fecha = document.getElementById("fecha-factura").value.trim();
+    const numero = document.getElementById("numero-factura").value.trim();
+    const id_proveedor = document.getElementById("proveedor-factura").value;
+    const id_categoria = document.getElementById("categoria-factura").value;
+    const subtotal = document.getElementById("subtotal-factura").value;
+    const itbms = document.getElementById("itbms-factura").value;
+    const total = document.getElementById("total-factura").value;
+
+    if (!fecha || !numero || !id_proveedor || !id_categoria || !subtotal || !itbms) {
+        alert("Por favor complete todos los campos");
+        return;
+    }
+
+    let datos = {
+        accion: "modificar",
+        id: id,
+        fecha: fecha,
+        numero: numero,
+        id_proveedor: id_proveedor,
+        id_categoria: id_categoria,
+        subtotal: subtotal,
+        itbms: itbms,
+        total: total
+    };
+
+    $.post("php/facturas.php", datos, function (res) {
+        if (res.trim() === "ok") {
+            alert("Factura modificada exitosamente");
+            cargarFacturas();
+            limpiarFormularioFactura();
+        } else {
+            alert("Error al modificar factura");
+        }
+    });
+}
+
+
+// =====================================================
+// ELIMINAR FACTURA (ACTUAL)
+// =====================================================
+function eliminarFacturaActual() {
+    const modulo = document.querySelector("#facturas");
+    const id = modulo.getAttribute("data-id");
+
+    if (!id) {
+        alert("Primero debe seleccionar una factura para eliminar");
+        return;
+    }
+
+    eliminarFactura(id);
+}
+
+
+// =====================================================
+// ELIMINAR FACTURA
+// =====================================================
+function eliminarFactura(id) {
+    if (!confirm("¿Seguro que deseas eliminar esta factura?")) return;
+
+    $.post("php/facturas.php", { accion: "eliminar", id: id }, function (res) {
+        if (res.trim() === "ok") {
+            alert("Factura eliminada");
+            cargarFacturas();
+            limpiarFormularioFactura();
+        } else {
+            alert("Error al eliminar factura");
+        }
+    });
+}
+
+
+// =====================================================
+// LIMPIAR FORMULARIO
+// =====================================================
+function limpiarFormularioFactura() {
+    document.getElementById("fecha-factura").value = "";
+    document.getElementById("numero-factura").value = "";
+    document.getElementById("proveedor-factura").value = "";
+    document.getElementById("categoria-factura").value = "";
+    document.getElementById("subtotal-factura").value = "";
+    document.getElementById("itbms-factura").value = "";
+    document.getElementById("total-factura").value = "";
+
+    const modulo = document.querySelector("#facturas");
+
+    // Quitar ID almacenado
+    modulo.removeAttribute("data-id");
+
+    // Alternar botones
+    modulo.querySelector(".boton-exito").style.display = "inline-block";  // mostrar Crear
+    modulo.querySelector(".boton-advertencia").style.display = "none";     // ocultar Modificar
+    // NO ocultar botón eliminar (solo debe estar en tabla)
 }
