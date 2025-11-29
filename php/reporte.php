@@ -4,6 +4,34 @@ include "db.php";
 $accion = $_POST["accion"] ?? "";
 
 
+// LISTAR TODAS LAS FACTURAS
+if ($accion == "listar") {
+
+    $sql = "SELECT 
+                f.fecha,
+                f.numero,
+                p.nombre AS proveedor,
+                c.nombre AS categoria,
+                f.subtotal,
+                f.itbms,
+                f.total
+            FROM facturas f
+            INNER JOIN proveedores p ON p.id_proveedor = f.id_proveedor
+            INNER JOIN categorias c ON c.id_categoria = f.id_categoria
+            ORDER BY f.fecha DESC";
+
+    $res = $conn->query($sql);
+
+    $data = [];
+
+    while ($row = $res->fetch_assoc()) {
+        $data[] = $row;
+    }
+
+    echo json_encode($data);
+}
+
+
 // REPORTE CON FILTROS
 if ($accion == "filtrar") {
 

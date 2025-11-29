@@ -116,13 +116,12 @@ function guardarProveedor() {
     $.post("php/proveedores.php", datos, function (res) {
 
         if (res.trim() === "ok") {
-            alert("Proveedor registrado correctamente");
-
+            showNotification("success", "Proveedor registrado correctamente");
             cargarProveedores();
             limpiarFormularioProveedor();
 
         } else {
-            alert("Error al registrar proveedor");
+            showNotification("error", "Error al registrar proveedor");
         }
     });
 }
@@ -151,46 +150,13 @@ function modificarProveedor() {
     $.post("php/proveedores.php", datos, function (res) {
         if (res.trim() === "ok") {
 
-            alert("Proveedor modificado exitosamente");
+            showNotification("success", "Proveedor modificado exitosamente");
 
             cargarProveedores();
             limpiarFormularioProveedor();
 
         } else {
-            alert("Error al modificar proveedor");
-        }
-    });
-}
-
-
-// =====================================================
-// GUARDAR MODIFICACIÓN(PROVEEDOR)
-// =====================================================
-function modificarProveedor() {
-
-    const modulo = document.querySelector("#proveedores");
-    const id = modulo.getAttribute("data-id");
-
-    let datos = {
-        accion: "modificar",
-        id: id,
-        codigo: document.getElementById("codigo-proveedor").value,
-        nombre: document.getElementById("nombre-proveedor").value,
-        ruc: document.getElementById("ruc-proveedor").value,
-        dv: document.getElementById("dv-proveedor").value,
-        direccion: document.getElementById("direccion-proveedor").value
-    };
-
-    $.post("php/proveedores.php", datos, function (res) {
-        if (res.trim() === "ok") {
-
-            alert("Proveedor modificado exitosamente");
-
-            cargarProveedores();
-            limpiarFormularioProveedor();
-
-        } else {
-            alert("Error al modificar proveedor");
+            showNotification("error", "Error al modificar proveedor");
         }
     });
 }
@@ -201,16 +167,18 @@ function modificarProveedor() {
 // =====================================================
 function eliminarProveedor(id) {
 
-    if (!confirm("¿Seguro que deseas eliminar este proveedor?")) return;
+    showConfirm("¿Seguro que deseas eliminar este proveedor?").then(confirmed => {
+        if (!confirmed) return;
 
-    $.post("php/proveedores.php", { accion: "eliminar", id: id }, function (res) {
+        $.post("php/proveedores.php", { accion: "eliminar", id: id }, function (res) {
 
-        if (res.trim() === "ok") {
-            alert("Proveedor eliminado");
-            cargarProveedores();
-        } else {
-            alert("No se puede eliminar proveedor: está asociado a facturas");
-        }
+            if (res.trim() === "ok") {
+                showNotification("success", "Proveedor eliminado");
+                cargarProveedores();
+            } else {
+                showNotification("error", "No se puede eliminar proveedor: está asociado a facturas");
+            }
+        });
     });
 }
 
@@ -333,7 +301,7 @@ function guardarCategoria() {
 
     // Validación básica
     if (!nombre || !descripcion) {
-        alert("Por favor complete todos los campos");
+        showNotification("warning", "Por favor complete todos los campos");
         return;
     }
 
@@ -346,13 +314,13 @@ function guardarCategoria() {
     $.post("php/categorias.php", datos, function (res) {
 
         if (res.trim() === "ok") {
-            alert("Categoría registrada correctamente");
+            showNotification("success", "Categoría registrada correctamente");
 
             cargarCategorias();
             limpiarFormularioCategoria();
 
         } else {
-            alert("Error al registrar categoría");
+            showNotification("error", "Error al registrar categoría");
         }
     });
 }
@@ -397,7 +365,7 @@ function modificarCategoria() {
     const id = modulo.getAttribute("data-id");
 
     if (!id) {
-        alert("Primero debe seleccionar una categoría para modificar");
+        showNotification("warning", "Primero debe seleccionar una categoría para modificar");
         return;
     }
 
@@ -406,7 +374,7 @@ function modificarCategoria() {
 
     // Validación básica
     if (!nombre || !descripcion) {
-        alert("Por favor complete todos los campos");
+        showNotification("warning", "Por favor complete todos los campos");
         return;
     }
 
@@ -420,13 +388,13 @@ function modificarCategoria() {
     $.post("php/categorias.php", datos, function (res) {
         if (res.trim() === "ok") {
 
-            alert("Categoría modificada exitosamente");
+            showNotification("success", "Categoría modificada exitosamente");
 
             cargarCategorias();
             limpiarFormularioCategoria();
 
         } else {
-            alert("Error al modificar categoría");
+            showNotification("error", "Error al modificar categoría");
         }
     });
 }
@@ -437,16 +405,18 @@ function modificarCategoria() {
 // =====================================================
 function eliminarCategoria(id) {
 
-    if (!confirm("¿Seguro que deseas eliminar esta categoría?")) return;
+    showConfirm("¿Seguro que deseas eliminar esta categoría?").then(confirmed => {
+        if (!confirmed) return;
 
-    $.post("php/categorias.php", { accion: "eliminar", id: id }, function (res) {
+        $.post("php/categorias.php", { accion: "eliminar", id: id }, function (res) {
 
-        if (res.trim() === "ok") {
-            alert("Categoría eliminada");
-            cargarCategorias();
-        } else {
-            alert("No se puede eliminar categoría: está asociada a facturas");
-        }
+            if (res.trim() === "ok") {
+                showNotification("success", "Categoría eliminada");
+                cargarCategorias();
+            } else {
+                showNotification("error", "No se puede eliminar categoría: está asociada a facturas");
+            }
+        });
     });
 }
 
@@ -608,7 +578,7 @@ function guardarFactura() {
     const total = document.getElementById("total-factura").value;
 
     if (!fecha || !numero || !id_proveedor || !id_categoria || !subtotal || !itbms) {
-        alert("Por favor complete todos los campos");
+        showNotification("warning", "Por favor complete todos los campos");
         return;
     }
 
@@ -625,11 +595,11 @@ function guardarFactura() {
 
     $.post("php/facturas.php", datos, function (res) {
         if (res.trim() === "ok") {
-            alert("Factura registrada correctamente");
+            showNotification("success", "Factura registrada correctamente");
             cargarFacturas();
             limpiarFormularioFactura();
         } else {
-            alert("Error al registrar factura");
+            showNotification("error", "Error al registrar factura");
         }
     });
 }
@@ -677,7 +647,7 @@ function modificarFactura() {
     const id = modulo.getAttribute("data-id");
 
     if (!id) {
-        alert("Primero debe seleccionar una factura para modificar");
+        showNotification("warning", "Primero debe seleccionar una factura para modificar");
         return;
     }
 
@@ -690,7 +660,7 @@ function modificarFactura() {
     const total = document.getElementById("total-factura").value;
 
     if (!fecha || !numero || !id_proveedor || !id_categoria || !subtotal || !itbms) {
-        alert("Por favor complete todos los campos");
+        showNotification("warning", "Por favor complete todos los campos");
         return;
     }
 
@@ -708,11 +678,11 @@ function modificarFactura() {
 
     $.post("php/facturas.php", datos, function (res) {
         if (res.trim() === "ok") {
-            alert("Factura modificada exitosamente");
+            showNotification("success", "Factura modificada exitosamente");
             cargarFacturas();
             limpiarFormularioFactura();
         } else {
-            alert("Error al modificar factura");
+            showNotification("error", "Error al modificar factura");
         }
     });
 }
@@ -726,28 +696,30 @@ function eliminarFacturaActual() {
     const id = modulo.getAttribute("data-id");
 
     if (!id) {
-        alert("Primero debe seleccionar una factura para eliminar");
+        showNotification("warning", "Primero debe seleccionar una factura para eliminar");
         return;
     }
 
+    // Reusar la confirmación moderna
     eliminarFactura(id);
 }
-
 
 // =====================================================
 // ELIMINAR FACTURA
 // =====================================================
 function eliminarFactura(id) {
-    if (!confirm("¿Seguro que deseas eliminar esta factura?")) return;
+    showConfirm("¿Seguro que deseas eliminar esta factura?").then(confirmed => {
+        if (!confirmed) return;
 
-    $.post("php/facturas.php", { accion: "eliminar", id: id }, function (res) {
-        if (res.trim() === "ok") {
-            alert("Factura eliminada");
-            cargarFacturas();
-            limpiarFormularioFactura();
-        } else {
-            alert("Error al eliminar factura");
-        }
+        $.post("php/facturas.php", { accion: "eliminar", id: id }, function (res) {
+            if (res.trim() === "ok") {
+                showNotification("success", "Factura eliminada");
+                cargarFacturas();
+                limpiarFormularioFactura();
+            } else {
+                showNotification("error", "Error al eliminar factura");
+            }
+        });
     });
 }
 
@@ -773,4 +745,373 @@ function limpiarFormularioFactura() {
     modulo.querySelector(".boton-exito").style.display = "inline-block";  // mostrar Crear
     modulo.querySelector(".boton-advertencia").style.display = "none";     // ocultar Modificar
     // NO ocultar botón eliminar (solo debe estar en tabla)
+}
+
+// ===============================================================================================================================================================
+// ===============   REPORTES   =====================
+// ===============================================================================================================================================================
+
+// Inicializar reportes al cargar la página
+document.addEventListener("DOMContentLoaded", () => {
+    cargarFacturasReportes();
+    cargarProveedoresFiltro();
+    categoriasFiltro();
+    
+    // Botones de reportes
+    const modulo = document.querySelector("#reportes");
+    
+    // Botón Buscar
+    const btnBuscar = modulo.querySelector(".boton-primario");
+    if (btnBuscar) {
+        btnBuscar.addEventListener("click", filtrarFacturas);
+    }
+    
+    // Botón Exportar CSV
+    const btnExportar = modulo.querySelector(".boton-exito");
+    if (btnExportar) {
+        btnExportar.addEventListener("click", exportarCSV);
+    }
+    
+    // Botón Limpiar Filtros (se obtiene desde el propio módulo para evitar índices incorrectos)
+    const btnLimpiar = modulo.querySelector(".boton-secundario");
+     if (btnLimpiar) {
+         btnLimpiar.addEventListener("click", limpiarFiltros);
+     }
+});
+
+
+// =====================================================
+// CARGAR TODAS LAS FACTURAS EN REPORTE
+// =====================================================
+function cargarFacturasReportes() {
+    $.post("php/reporte.php", { accion: "listar" }, function (respuesta) {
+        let datos = [];
+        try {
+            datos = JSON.parse(respuesta);
+        } catch (e) {
+            console.error("JSON inválido:", respuesta);
+            return;
+        }
+
+        mostrarTablaReportes(datos);
+        calcularTotales(datos);
+    });
+}
+
+
+// =====================================================
+// CARGAR PROVEEDORES EN FILTRO
+// =====================================================
+function cargarProveedoresFiltro() {
+    $.post("php/proveedores.php", { accion: "listar" }, function (respuesta) {
+        let datos = JSON.parse(respuesta);
+        let select = document.getElementById("proveedor-filtro");
+        
+        select.innerHTML = '<option value="">Todos los proveedores</option>';
+        
+        datos.forEach(p => {
+            select.innerHTML += `<option value="${p.id_proveedor}">${p.nombre}</option>`;
+        });
+    });
+}
+
+
+// =====================================================
+// CARGAR CATEGORÍAS EN FILTRO
+// =====================================================
+function categoriasFiltro() {
+    $.post("php/categorias.php", { accion: "listar" }, function (respuesta) {
+        let datos = JSON.parse(respuesta);
+        let select = document.getElementById("categoria-filtro");
+        
+        select.innerHTML = '<option value="">Todas las categorías</option>';
+        
+        datos.forEach(c => {
+            select.innerHTML += `<option value="${c.id_categoria}">${c.nombre}</option>`;
+        });
+    });
+}
+
+
+// =====================================================
+// FILTRAR FACTURAS
+// =====================================================
+function filtrarFacturas() {
+    const fecha_inicio = document.getElementById("fecha-inicio-filtro").value;
+    const fecha_fin = document.getElementById("fecha-fin-filtro").value;
+    const proveedor = document.getElementById("proveedor-filtro").value;
+    const categoria = document.getElementById("categoria-filtro").value;
+
+    let datos = {
+        accion: "filtrar",
+        fecha_inicio: fecha_inicio,
+        fecha_fin: fecha_fin,
+        proveedor: proveedor,
+        categoria: categoria
+    };
+
+    $.post("php/reporte.php", datos, function (respuesta) {
+        let resultados = [];
+        try {
+            resultados = JSON.parse(respuesta);
+        } catch (e) {
+            console.error("JSON inválido:", respuesta);
+            return;
+        }
+
+        mostrarTablaReportes(resultados);
+        calcularTotales(resultados);
+    });
+}
+
+
+// =====================================================
+// MOSTRAR TABLA DE REPORTES
+// =====================================================
+function mostrarTablaReportes(datos) {
+    let tabla = "";
+
+    if (datos.length === 0) {
+        tabla = `
+            <tr>
+                <td colspan="7" style="text-align:center; padding:2rem;">
+                    No hay facturas encontradas con los filtros seleccionados
+                </td>
+            </tr>
+        `;
+    } else {
+        datos.forEach(f => {
+            tabla += `
+                <tr>
+                    <td>${f.fecha}</td>
+                    <td>${f.numero}</td>
+                    <td>${f.proveedor}</td>
+                    <td>${f.categoria}</td>
+                    <td>$${parseFloat(f.subtotal).toFixed(2)}</td>
+                    <td>$${parseFloat(f.itbms).toFixed(2)}</td>
+                    <td>$${parseFloat(f.total).toFixed(2)}</td>
+                </tr>
+            `;
+        });
+    }
+
+    document.getElementById("tabla-reportes").innerHTML = tabla;
+}
+
+
+// =====================================================
+// CALCULAR TOTALES
+// =====================================================
+function calcularTotales(datos) {
+    let sumaTotal = 0;
+    
+    datos.forEach(f => {
+        sumaTotal += parseFloat(f.total);
+    });
+
+    const tarjetaTotales = document.querySelector(".tarjeta-totales");
+    tarjetaTotales.querySelector(".monto-total").textContent = "$" + sumaTotal.toFixed(2);
+    tarjetaTotales.querySelector("p").textContent = `Basado en ${datos.length} facturas encontradas`;
+}
+
+
+// =====================================================
+// EXPORTAR A CSV
+// =====================================================
+function exportarCSV() {
+    // Obtener datos de la tabla
+    const tabla = document.getElementById("tabla-reportes");
+    const filas = tabla.querySelectorAll("tr");
+
+    // Verificar si hay datos
+    if (filas.length === 0 || (filas.length === 1 && filas[0].textContent.includes("No hay facturas"))) {
+        showNotification("info", "No hay facturas para exportar");
+        return;
+    }
+
+    // Encabezados
+    const encabezados = ["Fecha", "No. Factura", "Proveedor", "Categoría", "Subtotal", "ITBMS", "Total"];
+    let csv = encabezados.join(",") + "\n";
+
+    // Datos
+    filas.forEach(fila => {
+        const celdas = fila.querySelectorAll("td");
+        if (celdas.length > 0) {
+            let fila_csv = [];
+            celdas.forEach(celda => {
+                let valor = celda.textContent.trim();
+                // Escapar comillas y envolver en comillas si contiene comas
+                valor = valor.replace(/"/g, '""');
+                if (valor.includes(",")) {
+                    valor = `"${valor}"`;
+                }
+                fila_csv.push(valor);
+            });
+            csv += fila_csv.join(",") + "\n";
+        }
+    });
+
+    // Agregar fila de totales
+    const tarjetaTotales = document.querySelector(".tarjeta-totales");
+    const montoTotal = tarjetaTotales.querySelector(".monto-total").textContent;
+    const cantidadFacturas = tarjetaTotales.querySelector("p").textContent;
+    
+    csv += "\n,,,Totales:,,,\n";
+    csv += `"${cantidadFacturas}","${montoTotal}"\n`;
+
+    // Crear y descargar archivo
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    
+    link.setAttribute("href", url);
+    link.setAttribute("download", `reporte_facturas_${new Date().getTime()}.csv`);
+    link.style.visibility = "hidden";
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    // Después de descarga
+    showNotification("success", "Archivo CSV descargado exitosamente");
+}
+
+
+// =====================================================
+// LIMPIAR FILTROS
+// =====================================================
+function limpiarFiltros() {
+    document.getElementById("fecha-inicio-filtro").value = "";
+    document.getElementById("fecha-fin-filtro").value = "";
+    document.getElementById("proveedor-filtro").value = "";
+    document.getElementById("categoria-filtro").value = "";
+
+    cargarFacturasReportes();
+}
+
+/* ---------------------------
+   Sistema de notificaciones
+   --------------------------- */
+function showNotification(tipo = "info", mensaje = "", duracion = 4000) {
+    // Intentar obtener contenedor existente o crear uno
+    let cont = document.getElementById("notificaciones");
+    if (!cont) {
+        cont = document.createElement("div");
+        cont.id = "notificaciones";
+        cont.setAttribute("aria-live", "polite");
+        document.body.appendChild(cont);
+    }
+
+    const notif = document.createElement("div");
+    notif.className = `notificacion notificacion--${tipo}`;
+
+    // Iconos sencillos (se puede poner svg pero me da pereza)
+    const iconMap = {
+        success: "✓",
+        error: "✕",
+        warning: "⚠",
+        info: "ℹ"
+    };
+    const icon = iconMap[tipo] || iconMap.info;
+
+    notif.innerHTML = `<div class="icono">${icon}</div><div class="contenido">${mensaje}</div>`;
+
+    // Cerrar al hacer click
+    notif.addEventListener("click", () => closeNotif(notif));
+
+    cont.appendChild(notif);
+
+    // Auto-cierre
+    const timeoutId = setTimeout(() => closeNotif(notif), duracion);
+
+    function closeNotif(el) {
+        clearTimeout(timeoutId);
+        if (!el.classList.contains("notificacion--cerrando")) {
+            el.classList.add("notificacion--cerrando");
+            // Esperar animación y remover
+            setTimeout(() => {
+                if (el && el.parentNode) el.parentNode.removeChild(el);
+            }, 300);
+        }
+    }
+
+    return notif;
+}
+
+/* ---------------------------
+   Sistema de confirmación de eliminacion
+   --------------------------- */
+function showConfirm(mensaje = "¿Confirmar?", opciones = {}) {
+    // Devuelve Promise<boolean>
+    return new Promise(resolve => {
+        const overlay = document.createElement("div");
+        overlay.className = "confirm-overlay";
+
+        const dialog = document.createElement("div");
+        dialog.className = "confirm-dialog";
+
+        const titulo = document.createElement("div");
+        titulo.className = "confirm-titulo";
+        titulo.textContent = opciones.titulo || "Confirmación";
+
+        const msg = document.createElement("div");
+        msg.className = "confirm-mensaje";
+        msg.textContent = mensaje;
+
+        const botones = document.createElement("div");
+        botones.className = "confirm-botones";
+
+        const btnCancel = document.createElement("button");
+        btnCancel.className = "confirm-btn confirm-btn--cancel";
+        btnCancel.textContent = opciones.textoCancelar || "Cancelar";
+
+        const btnAccept = document.createElement("button");
+        btnAccept.className = "confirm-btn confirm-btn--accept";
+        btnAccept.textContent = opciones.textoAceptar || "Sí, eliminar";
+
+        // Si se pasa tipo 'alt' para aceptar (ej: confirmaciones positivas)
+        if (opciones.acceptAlt) btnAccept.classList.add("alt");
+
+        botones.appendChild(btnCancel);
+        botones.appendChild(btnAccept);
+
+        dialog.appendChild(titulo);
+        dialog.appendChild(msg);
+        dialog.appendChild(botones);
+        overlay.appendChild(dialog);
+        document.body.appendChild(overlay);
+
+        // Manejo de respuesta
+        function limpiar() {
+            if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
+        }
+
+        btnCancel.addEventListener("click", () => {
+            limpiar();
+            resolve(false);
+        });
+
+        btnAccept.addEventListener("click", () => {
+            limpiar();
+            resolve(true);
+        });
+
+        // Cerrar si el usuario hace click fuera del dialog
+        overlay.addEventListener("click", (e) => {
+            if (e.target === overlay) {
+                limpiar();
+                resolve(false);
+            }
+        });
+
+        // Esc esc para cancelar
+        function onKey(e) {
+            if (e.key === "Escape") {
+                limpiar();
+                resolve(false);
+                document.removeEventListener("keydown", onKey);
+            }
+        }
+        document.addEventListener("keydown", onKey);
+    });
 }
